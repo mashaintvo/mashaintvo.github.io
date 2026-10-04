@@ -1,0 +1,102 @@
+/* ───────── navegación ───────── */
+
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  height: var(--nav-h);
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  column-gap: clamp(16px, 2.4vw, 40px);
+  transition: background-color 0.5s var(--ease), border-color 0.5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.nav.es-solida {
+  background: rgba(15, 10, 20, 0.78);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom-color: var(--line);
+}
+
+.nav__marca { display: inline-flex; align-items: center; color: var(--text); }
+@keyframes parpadeo { 50% { opacity: 0; } }
+/* Su nombre es la marca: «maría» firme y en marfil, «sanjuán» fino y con el
+   degradado pastel. Minúsculas, Manrope, casi sin tracking. */
+.nav__nombre { font: 21px/1 var(--f-marca); letter-spacing: -0.03em; white-space: nowrap; padding-bottom: 3px; }
+.nav__nombre b { font-weight: 700; color: var(--text); }
+.nav__nombre .grad { font-weight: 300; padding-right: 0.04em; }
+
+.nav__corrida {
+  display: inline-flex; gap: 10px; align-items: baseline;
+  justify-self: start;
+  font: 500 11px/1 var(--f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.nav__corrida-n { color: var(--acento); transition: color 0.5s var(--ease); }
+
+.nav__menu ul { display: flex; gap: clamp(14px, 2vw, 32px); }
+.nav__menu a, .menu a { position: relative; display: inline-block; }
+.nav__menu a { font: 400 15px/1 var(--f-body); color: var(--text-2); padding-block: 10px; transition: color 0.3s; }
+.nav__menu a:hover, .nav__menu a[aria-current="true"] { color: var(--text); }
+.nav__menu a[aria-current="true"]::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: var(--acento);
+}
+
+/* Al pasar por encima, cada letra cambia de rol: de la Geist a la Manrope fina, en el color del rol. */
+.letra { display: inline-grid; vertical-align: top; }
+.letra > span { grid-area: 1 / 1; transition: opacity 0.35s var(--ease), transform 0.45s var(--ease); transition-delay: calc(var(--i, 0) * 22ms); }
+.letra > span:last-child { font-family: var(--f-display); font-weight: 300; font-size: 1.06em; line-height: 0.95; opacity: 0; transform: translateY(40%); color: var(--acento); }
+a:hover .letra > span:first-child, a:focus-visible .letra > span:first-child { opacity: 0; transform: translateY(-40%); }
+a:hover .letra > span:last-child, a:focus-visible .letra > span:last-child { opacity: 1; transform: none; }
+
+.nav__acciones { display: inline-flex; align-items: center; gap: 14px; }
+.nav__acciones .modo__op { min-width: 64px; min-height: 30px; padding: 0 10px; }
+.nav__acciones .modo__op--c { font-size: 12px; }
+.nav__acciones .modo__op--d { font-size: 15px; }
+.nav__idioma {
+  display: inline-grid; place-items: center;
+  min-width: 40px; min-height: 40px;
+  font: 500 12px/1 var(--f-mono); letter-spacing: 0.08em;
+  color: var(--text-2);
+  border: 1px solid var(--line-2); border-radius: 999px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.nav__idioma:hover { color: var(--text); border-color: var(--text); }
+
+.nav__toggle { display: none; align-items: center; gap: 12px; min-height: 44px; font: 500 12px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav__toggle-icon { display: grid; gap: 6px; width: 24px; }
+.nav__toggle-icon i { display: block; height: 1.5px; background: currentColor; transition: transform 0.5s var(--ease); }
+html.menu-abierto .nav__toggle-icon i:first-child { transform: translateY(3.75px) rotate(45deg); }
+html.menu-abierto .nav__toggle-icon i:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+
+/* menú móvil */
+.menu {
+  position: fixed; inset: 0; z-index: 90;
+  padding: calc(var(--nav-h) + 24px) var(--gutter) 32px;
+  background: var(--bg);
+  display: grid; grid-template-rows: 1fr auto; gap: 32px;
+}
+.menu[hidden] { display: none; }
+.menu ol { display: grid; gap: 4px; align-content: center; height: 100%; counter-reset: m; }
+.menu li { counter-increment: m; }
+.menu ol a { display: flex; align-items: baseline; gap: 14px; font: 300 clamp(44px, 12vw, 72px)/1.1 var(--f-display); letter-spacing: -0.04em; }
+.menu ol a::before { content: counter(m, upper-roman); font: 500 12px/1 var(--f-mono); color: var(--acento); min-width: 28px; }
+.menu__pie { display: grid; gap: 16px; justify-items: start; font: 400 15px/1.4 var(--f-body); color: var(--text-2); }
+.menu__correo { color: var(--text); }
+
+@media (max-width: 1100px) {
+  .nav__corrida { display: none; }
+  .nav { grid-template-columns: auto 1fr auto auto; }
+}
+@media (max-width: 900px) {
+  .nav { grid-template-columns: auto 1fr auto; }
+  .nav__menu, .nav__acciones .modo { display: none; }
+  .nav__toggle { display: inline-flex; }
+  .nav__acciones { justify-self: end; }
+}
+@media (max-width: 420px) {
+  .nav__nombre { font-size: 19px; }
+}

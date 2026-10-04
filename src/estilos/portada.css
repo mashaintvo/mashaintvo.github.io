@@ -1,0 +1,175 @@
+/* ───────── portada ─────────
+   Composición de portada de revista: el nombre enorme abajo a la izquierda,
+   el retrato de código a la derecha con su pie de foto, y la edición arriba.
+   El retrato lo dibuja WebGL; la <img> es el póster: lo que se ve sin WebGL
+   y lo que se disuelve en código al entrar. */
+
+.portada {
+  position: relative;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 20px) var(--gutter) 28px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto 1fr auto;
+  column-gap: 24px;
+  isolation: isolate;
+}
+
+.portada__edicion {
+  grid-column: 1 / 7; grid-row: 1;
+  display: flex; gap: 28px;
+  font: 500 11px/1 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.portada__edicion span + span::before { content: '/'; margin-right: 28px; color: var(--line-2); }
+
+.portada__texto {
+  grid-column: 1 / 8; grid-row: 2;
+  align-self: end;
+  display: grid; gap: 26px;
+  padding-bottom: 12px;
+  position: relative; z-index: 2;
+}
+.portada__titulo { display: grid; gap: 22px; font-weight: 400; }
+.portada__nombre {
+  display: block;
+  font: 300 clamp(80px, 12.6vw, 236px)/0.86 var(--f-display);
+  letter-spacing: -0.055em;
+  margin-left: -0.05em;
+}
+.portada__nombre em { padding-right: 0.06em; }
+.portada__rol {
+  display: block;
+  font: 500 clamp(12px, 1vw, 14px)/1.4 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.portada__rol .amp { font: 300 1.4em/1 var(--f-display); letter-spacing: 0; color: var(--acento); text-transform: none; margin-inline: 0.15em; transition: color 0.6s var(--ease); }
+.portada__lead { max-width: 46ch; font-size: clamp(17px, 1.3vw, 20px); line-height: 1.55; color: var(--text-2); }
+.portada__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+
+.portada__fig {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  /* el póster y la línea de escaneo nunca ensanchan la página */
+  overflow: hidden;
+}
+.portada__poster {
+  position: absolute;
+  /* sin JS: a la derecha, a toda altura; con WebGL, mundo.ts lo alinea con las partículas */
+  right: var(--gutter); bottom: 0;
+  height: min(92svh, 1100px); width: auto;
+  left: var(--px, auto); top: var(--py, auto);
+  transition: opacity 1.2s var(--ease);
+}
+.gl-listo .portada__poster {
+  right: auto; bottom: auto; height: var(--ph, auto); width: var(--pw, auto);
+  /* la línea de escaneo se lleva la foto y deja el código */
+  -webkit-mask-image: linear-gradient(to bottom, transparent calc(var(--scan, -20%) - 2%), #000 calc(var(--scan, -20%) + 7%));
+  mask-image: linear-gradient(to bottom, transparent calc(var(--scan, -20%) - 2%), #000 calc(var(--scan, -20%) + 7%));
+}
+.gl-codigo .portada__poster { opacity: 0; }
+.portada__scan {
+  position: absolute;
+  left: var(--px, 0); width: var(--pw, 0);
+  top: calc(var(--py, 0px) + var(--ph, 0px) * var(--scanf, -1));
+  height: 1px;
+  background: var(--aqua);
+  box-shadow: 0 0 22px 3px rgba(142, 227, 211, 0.55);
+  opacity: var(--scan-op, 0);
+}
+
+/* El pie de foto vive en la franja inferior, como la letra pequeña de una portada. */
+.portada__pie {
+  flex: 1;
+  max-width: 78ch;
+  margin-inline: 32px;
+  font: 400 12.5px/1.5 var(--f-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-3);
+  text-align: center;
+}
+.portada__pie .fig { font: 500 11px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--acento); margin-right: 8px; transition: color 0.6s var(--ease); }
+
+.portada__vertical {
+  position: absolute; z-index: 2;
+  right: 10px; top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font: 500 10px/1 var(--f-mono);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.portada__meta {
+  grid-column: 1 / -1; grid-row: 3;
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font: 500 11px/1 var(--f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  position: relative; z-index: 2;
+}
+.portada__scroll { display: inline-flex; align-items: center; gap: 10px; }
+.portada__scroll i { width: 1px; height: 26px; background: var(--line-2); position: relative; overflow: hidden; }
+.portada__scroll i::after { content: ''; position: absolute; inset: 0; background: var(--acento); animation: bajar 2.2s var(--ease-io) infinite; }
+@keyframes bajar { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(100%); } }
+
+/* La lupa: el aro del puntero, grande, con el nombre del rol que revela. */
+.lupa {
+  position: fixed; left: 0; top: 0; z-index: 3;
+  width: var(--lupa, 240px); height: var(--lupa, 240px);
+  margin: calc(var(--lupa, 240px) / -2) 0 0 calc(var(--lupa, 240px) / -2);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(var(--lx, -999px), var(--ly, -999px), 0);
+  transition: opacity 0.5s var(--ease);
+  display: grid; place-items: end center;
+}
+.lupa::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from var(--giro), #F3B0C3, #8EE3D3, #B8A9E8, #FDF0A6, #F3B0C3);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1px));
+  animation: girar 9s linear infinite;
+}
+.lupa.es-visible { opacity: 1; }
+.lupa span {
+  transform: translateY(calc(100% + 10px));
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(15, 10, 20, 0.75);
+  font: 500 10px/1 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.no-webgl .lupa { display: none; }
+
+@media (max-width: 1100px) {
+  .portada__texto { grid-column: 1 / 10; }
+  .portada__pie { display: none; }
+}
+/* Sin WebGL se ve la foto, no el código: el pie no aplica. */
+.no-webgl .portada__pie { visibility: hidden; }
+@media (max-width: 760px) {
+  .portada {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding-top: calc(var(--nav-h) + 50svh);
+    min-height: 100svh;
+  }
+  .portada__edicion { position: absolute; top: calc(var(--nav-h) + 12px); left: var(--gutter); }
+  .portada__texto { gap: 20px; }
+  .portada__nombre { font-size: clamp(64px, 19.5vw, 120px); }
+  .portada__poster { right: 50%; transform: translateX(50%); height: 56svh; bottom: auto; top: calc(var(--nav-h) + 8px); }
+  .gl-listo .portada__poster { transform: none; }
+  .portada__vertical { display: none; }
+  .portada__meta { margin-top: 28px; }
+}

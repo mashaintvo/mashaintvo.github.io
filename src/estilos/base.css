@@ -1,0 +1,280 @@
+/* ════════════════════════════════════════════════════════════════════
+   María Sanjuán — portafolio
+   Dos roles, una firma: cada cosa del sitio existe en dos materiales,
+   código y diseño, y el interruptor decide cuál va delante.
+   · Berenjena de fondo (no el azul noche de Lúmina), marfil para el texto.
+   · Los cuatro pasteles del monograma de María, con oficio: aguamarina =
+     código, rosa = diseño, lila = estructura y sombra, amarillo = luz.
+   · Manrope en titulares y en su nombre (la letra de su tablero de marca,
+     redonda como el trazo del monograma), Geist en el cuerpo y Geist Mono
+     para código, cifras y rótulos.
+   · El acento de los titulares es el degradado del monograma (rosa →
+     aguamarina → lila → amarillo); el interruptor decide por dónde empieza.
+   ════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0F0A14;
+  --bg-2: #150D1B;
+  --bg-3: #1D1325;
+  --text: #FBF3EE;
+  --text-2: rgba(251, 243, 238, 0.76);
+  /* 0,58 sobre berenjena ≈ 6:1, suficiente para texto pequeño */
+  --text-3: rgba(251, 243, 238, 0.58);
+  --line: rgba(251, 243, 238, 0.14);
+  --line-2: rgba(251, 243, 238, 0.3);
+  --aqua: #8EE3D3;
+  --butter: #FDF0A6;
+  --rosa: #F3B0C3;
+  --lila: #B8A9E8;
+  /* el color del rol que va delante */
+  --acento: var(--aqua);
+  /* el degradado del monograma, empezando por el rol que va delante */
+  --degradado: linear-gradient(90deg, #8EE3D3 0%, #B8A9E8 42%, #F3B0C3 72%, #FDF0A6 100%);
+
+  --f-display: 'Manrope Variable', 'Geist Variable', system-ui, sans-serif;
+  --f-body: 'Geist Variable', 'Helvetica Neue', Arial, sans-serif;
+  --f-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --f-marca: 'Manrope Variable', 'Geist Variable', system-ui, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 64px);
+  --max: 1520px;
+  --nav-h: 72px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: dark;
+}
+html[data-modo="diseno"] {
+  --acento: var(--rosa);
+  --degradado: linear-gradient(90deg, #F3B0C3 0%, #B8A9E8 38%, #8EE3D3 70%, #FDF0A6 100%);
+}
+
+/* Los titulares, en Manrope fina; lo que antes iba en cursiva ahora lleva el
+   degradado del monograma (main.ts lo hace continuo entre palabras). */
+.grad, h1 em, h2 em, h3 em {
+  font-style: normal;
+  background: var(--degradado);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+/* partido en palabras, el degradado lo pinta cada palabra (y no dos veces) */
+h1 em:has(.w__i), h2 em:has(.w__i), h3 em:has(.w__i), .grad:has(.w__i) { background: none; }
+h1 em .w__i, h2 em .w__i, h3 em .w__i, .grad .w__i {
+  background: var(--degradado);
+  background-size: var(--gw, 100%) 100%;
+  background-position: var(--gx, 0) 0;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 17px/1.65 var(--f-body);
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+body.cargando { overflow: hidden; }
+
+img, svg, canvas, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+em { font-style: italic; }
+
+::selection { background: var(--acento); color: var(--bg); }
+
+:focus-visible {
+  outline: 2px solid var(--butter);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.saltar {
+  position: fixed; left: 16px; top: 16px; z-index: 300;
+  padding: 10px 16px;
+  background: var(--butter); color: var(--bg);
+  font: 600 14px/1 var(--f-mono);
+  transform: translateY(-200%);
+  transition: transform 0.3s var(--ease);
+}
+.saltar:focus { transform: none; }
+
+/* ───────── capas de ambiente ───────── */
+
+.webgl {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.no-webgl .webgl { display: none; }
+.fx-vineta {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 72% 38%, rgba(243, 176, 195, 0.07), transparent 70%),
+    radial-gradient(45% 45% at 12% 90%, rgba(142, 227, 211, 0.05), transparent 70%),
+    radial-gradient(130% 100% at 50% 45%, transparent 55%, rgba(8, 5, 11, 0.85) 100%);
+}
+main, .pie { position: relative; z-index: 2; }
+
+/* ───────── la nota de los dos roles ───────── */
+
+.anot {
+  display: inline-flex;
+  font: 400 12px/1.4 var(--f-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+.anot > span { transition: opacity 0.4s var(--ease), transform 0.5s var(--ease); }
+.anot__d { font-family: var(--f-display); font-weight: 500; font-size: 13px; letter-spacing: -0.005em; color: var(--rosa); }
+html[data-modo="codigo"] .anot__d,
+html[data-modo="diseno"] .anot__c { display: none; }
+
+/* ───────── el interruptor ───────── */
+
+.modo {
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: stretch;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 3px;
+  isolation: isolate;
+}
+.modo::before {
+  /* la píldora que se desliza hasta el rol activo */
+  content: '';
+  position: absolute; z-index: -1;
+  top: 3px; bottom: 3px; left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
+  background: var(--acento);
+  transition: transform 0.55s var(--ease), background-color 0.55s var(--ease);
+}
+html[data-modo="diseno"] .modo::before { transform: translateX(100%); }
+.modo__op {
+  min-width: 84px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: var(--text-2);
+  transition: color 0.4s var(--ease);
+}
+.modo__op--c { font: 500 13px/1 var(--f-mono); letter-spacing: 0.02em; }
+.modo__op--d { font: 500 14px/1 var(--f-display); letter-spacing: -0.005em; }
+.modo__op[aria-pressed="true"] { color: var(--bg); }
+.modo__op:focus-visible { outline-offset: 2px; border-radius: 999px; }
+
+/* ───────── el puntero ─────────
+   Un punto exacto y un aro con el degradado del monograma (src/ui/cursor.ts). */
+
+@property --giro { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes girar { to { --giro: 360deg; } }
+html.cursor-propio, html.cursor-propio * { cursor: none !important; }
+.cursor { position: fixed; left: 0; top: 0; z-index: 400; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+.cursor.es-visible { opacity: 1; }
+.cursor__aro, .cursor__punto { position: fixed; left: 0; top: 0; width: 0; height: 0; }
+.cursor__aro::before {
+  content: ''; position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%;
+  background: conic-gradient(from var(--giro), #F3B0C3, #8EE3D3, #B8A9E8, #FDF0A6, #F3B0C3);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.6px), #000 calc(100% - 1.1px));
+  animation: girar 6s linear infinite;
+  transition: transform 0.5s var(--ease), opacity 0.3s;
+}
+.cursor__aro::after {
+  content: ''; position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(15, 10, 20, 0.62);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transform: scale(0); transition: transform 0.5s var(--ease);
+}
+.cursor__punto::before {
+  content: ''; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text); box-shadow: 0 0 0 1px rgba(15, 10, 20, 0.35);
+  transition: transform 0.35s var(--ease);
+}
+.cursor__texto {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  transform: translate(-50%, -50%) scale(0.6); opacity: 0;
+  font: 500 10.5px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); white-space: nowrap;
+  transition: transform 0.45s var(--ease), opacity 0.3s;
+}
+.cursor[data-estado="tocable"] .cursor__aro::before { transform: scale(1.5); }
+.cursor[data-estado="tocable"] .cursor__punto::before { transform: scale(0.5); }
+.cursor[data-estado="etiqueta"] .cursor__aro::before, .cursor[data-estado="etiqueta"] .cursor__aro::after { transform: scale(2.7); }
+.cursor[data-estado="etiqueta"] .cursor__punto::before { transform: scale(0); }
+.cursor[data-estado="etiqueta"] .cursor__texto { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.cursor.es-pulsado .cursor__aro::before { transform: scale(0.8); }
+.cursor.en-lupa .cursor__aro { opacity: 0; }
+
+/* ───────── botones y enlaces ───────── */
+
+.btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  min-height: 48px;
+  padding: 0 22px;
+  background: var(--acento);
+  color: var(--bg);
+  font: 500 13px/1 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: background-color 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.btn i { font-style: normal; transition: transform 0.5s var(--ease); }
+.btn:hover i { transform: translateX(4px); }
+
+.enlace {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  padding-block: 10px;
+  font: 500 13px/1 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 4px) / 100% 1px no-repeat;
+  transition: background-size 0.5s var(--ease);
+}
+.enlace small { font-size: 10px; color: var(--text-3); }
+.enlace:hover { background-size: 0% 1px; background-position: 100% calc(100% - 4px); }
+
+/* ───────── utilidades de entrada ───────── */
+
+.linea { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.linea > span { display: block; }
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.w__i { display: inline-block; }
+
+/* Una sección sin construir: solo en desarrollo; el build no la publica. */
+.seccion-pendiente {
+  min-height: 60vh;
+  display: grid; place-content: center; gap: 12px; text-align: center;
+  border-top: 1px dashed var(--line-2);
+  color: var(--text-3);
+  font: 400 14px/1.4 var(--f-mono);
+}
+.seccion-pendiente h2 { font: 300 clamp(44px, 6vw, 96px)/1 var(--f-display); color: var(--text); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}

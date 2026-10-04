@@ -1,0 +1,9 @@
+.perdida[hidden] { display: none; }
+.perdida { min-height: 100svh; padding: 48px var(--gutter); display: grid; align-content: center; gap: 28px; max-width: var(--max); margin-inline: auto; }
+.perdida__marca { font: 28px/1 var(--f-display); letter-spacing: -0.03em; }
+.perdida__marca b { font-weight: 700; }
+.perdida__marca .grad { font-weight: 300; }
+.perdida__n { font: 500 12px/1 var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--acento); }
+.perdida h1 { font: 300 clamp(56px, 10vw, 160px)/0.94 var(--f-display); letter-spacing: -0.05em; }
+.perdida p { max-width: 52ch; color: var(--text-2); font-size: 18px; }
+.perdida__enlaces { display: flex; flex-wrap: wrap; gap: 12px 28px; }

@@ -1,0 +1,43 @@
+/* ───────── pie ───────── */
+
+.pie {
+  padding: clamp(80px, 12vw, 160px) var(--gutter) 28px;
+  border-top: 1px solid var(--line);
+  display: grid; gap: clamp(48px, 8vw, 96px);
+}
+/* El cierre: su nombre, como en la barra pero grande. */
+.pie__marca { font: clamp(44px, 7vw, 112px)/0.95 var(--f-marca); letter-spacing: -0.05em; color: var(--text); }
+.pie__marca b { font-weight: 700; }
+.pie__marca .grad { font-weight: 300; padding-right: 0.04em; }
+.pie__fila {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) auto minmax(0, 1fr);
+  gap: 16px 32px; align-items: end;
+  font: 400 13px/1.5 var(--f-body);
+  color: var(--text-3);
+}
+.pie__redes { display: flex; gap: 24px; }
+.pie__redes a { font: 500 12px/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); padding-block: 12px; }
+.pie__redes a:hover { color: var(--acento); }
+.pie__legal { justify-self: end; }
+@media (max-width: 760px) {
+  .pie__fila { grid-template-columns: minmax(0, 1fr); }
+  .pie__legal { justify-self: start; }
+}
+
+/* ───────── pantalla de carga ─────────
+   Su nombre sube letra a letra mientras el cursor escribe su rol debajo,
+   como en un editor. */
+.cargador {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-content: center; justify-items: center; gap: 28px;
+  background: var(--bg);
+}
+.cargador__nombre { font: clamp(44px, 9vw, 120px)/1 var(--f-marca); letter-spacing: -0.05em; color: var(--text); white-space: nowrap; }
+.cargador__nombre b { font-weight: 700; }
+.cargador__nombre .grad { font-weight: 300; padding-right: 0.04em; }
+.cargador__letra { display: inline-block; }
+.cargador { perspective: 1000px; }
+.cargador__linea { display: inline-flex; align-items: center; gap: 2px; font: 500 13px/1 var(--f-mono); letter-spacing: 0.06em; color: var(--text-2); min-height: 18px; }
+.cargador__caret { width: 8px; height: 16px; background: var(--aqua); animation: parpadeo 1s steps(1) infinite; }
+.no-js .cargador, .reducido .cargador { display: none; }

@@ -1,0 +1,26 @@
+# María Sanjuán
+
+> Frontend AI Developer & UX/UI Designer in Bogotá, Colombia. More than eight years building interfaces remotely for teams in Spain, Germany and Colombia. Today she builds with multi-agent AI under spec-driven development (SDD) with Claude: she writes the spec, agents implement, automated checks verify, and she makes the decisions. Founder of Lúmina Tech Colombia S.A.S. (2026).
+
+## Contact
+
+- Email: marialeja0314@gmail.com
+- LinkedIn: https://www.linkedin.com/in/msanjuanherrera/
+- GitHub: https://github.com/mashaintvo
+- Behance: https://www.behance.net/mashiverse
+- Résumé (English, PDF): https://mashaintvo.github.io/cv/maria-sanjuan-resume.pdf
+- Hoja de vida (español, PDF): https://mashaintvo.github.io/cv/maria-sanjuan-hoja-de-vida.pdf
+
+## Case studies (interactive, on the portfolio itself)
+
+- Lúmina Tech (2026): the website of her EdTech company, luminahub.com.co. Vite, TypeScript, three.js particle engine, GSAP scroll choreography. Content-first: it reads complete without JavaScript or WebGL.
+- Lúmina Campus (2026): a school management platform built on Colombian law (Decree 1290 grading, Law 1620 coexistence protocols, Law 1581 data protection). React 19, TypeScript, Tailwind CSS v4, Node.js, Express, PostgreSQL on Supabase, Playwright. In production since August 3, 2026. The portfolio recreates its early-warning system, role-based chat, MEN report card and design system with fictitious data.
+
+## Skills
+
+React, Angular, Vue, TypeScript, JavaScript, HTML5, CSS3, SASS (BEM), Tailwind CSS, RxJS, three.js and WebGL, GSAP, Vite, Node.js, Express, PostgreSQL, .NET; Figma, design systems, accessibility (WCAG 2.1 AA), prototyping; Storybook, Playwright, CI/CD, Docker; Claude, Claude Code, Cursor, MCP, n8n.
+
+## Pages
+
+- English: https://mashaintvo.github.io/
+- Español: https://mashaintvo.github.io/es/

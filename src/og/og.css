@@ -1,0 +1,17 @@
+html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #0F0A14; }
+.og {
+  position: relative; width: 1200px; height: 630px; box-sizing: border-box; padding: 56px 64px;
+  color: #FBF3EE; font-family: 'Geist Variable', sans-serif;
+  background:
+    radial-gradient(50% 60% at 78% 45%, rgba(243, 176, 195, 0.12), transparent 70%),
+    radial-gradient(40% 50% at 10% 95%, rgba(142, 227, 211, 0.08), transparent 70%),
+    #0F0A14;
+}
+.og__etiqueta { margin: 0; font: 500 15px/1 'Geist Mono Variable', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(251, 243, 238, 0.6); }
+.og__nombre { position: relative; z-index: 2; margin: 64px 0 0; font: 700 146px/0.88 'Manrope Variable', sans-serif; letter-spacing: -0.06em; }
+.og__nombre em { font-weight: 300; font-style: normal; background: linear-gradient(90deg, #8EE3D3, #B8A9E8 45%, #F3B0C3 75%, #FDF0A6); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 0.06em; }
+.og__rol { position: relative; z-index: 2; margin: 34px 0 0; font: 600 17px/1 'Geist Mono Variable', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(251, 243, 238, 0.8); }
+.og__rol .amp { font: 300 24px/1 'Manrope Variable', sans-serif; letter-spacing: 0; color: #F3B0C3; text-transform: none; margin: 0 4px; }
+.og__lema { position: absolute; left: 64px; bottom: 52px; z-index: 2; margin: 0; font: 400 28px/1 'Manrope Variable', sans-serif; letter-spacing: -0.02em; color: #F3B0C3; }
+.og__retrato { position: absolute; right: 0; top: 0; z-index: 1; }
+

@@ -1,0 +1,54 @@
+/* ───────── la carta ─────────
+   Página de revista: título enorme arriba, el texto en una columna estrecha
+   con capitular, y las notas al margen, como en una publicación impresa. */
+
+.carta {
+  padding: clamp(96px, 16vw, 220px) var(--gutter) clamp(80px, 12vw, 180px);
+}
+.carta__grid {
+  max-width: var(--max);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: clamp(48px, 7vw, 96px);
+}
+.carta__cab { grid-column: 1 / -1; display: grid; gap: 22px; }
+.carta__titulo {
+  font: 300 clamp(52px, 8.8vw, 164px)/0.94 var(--f-display);
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.carta__cuerpo { grid-column: 5 / 11; display: grid; gap: 1.2em; font-size: clamp(18px, 1.35vw, 21px); line-height: 1.62; color: var(--text-2); }
+.carta__p--capitular::first-letter {
+  float: left;
+  font: 300 5.2em/0.8 var(--f-display);
+  margin: 0.06em 0.1em 0 -0.04em;
+  color: var(--text);
+}
+.ref { font: 600 0.62em/0 var(--f-mono); vertical-align: super; margin-left: 2px; }
+.ref a { color: var(--acento); padding: 4px 2px; transition: color 0.6s var(--ease); }
+.ref a:hover { text-decoration: underline; }
+
+.carta__firma { display: grid; gap: 6px; margin-top: 0.8em; }
+/* la firma es su nombre como en el monograma: Manrope, minúsculas */
+.carta__firma-nombre { font: 500 clamp(40px, 4.4vw, 68px)/1 var(--f-marca); color: var(--text); letter-spacing: -0.025em; }
+.carta__firma-lugar { font: 500 11px/1 var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+
+.carta__notas { grid-column: 11 / 13; align-self: start; padding-top: 0.4em; }
+.carta__notas ol { display: grid; gap: 20px; }
+.carta__notas li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 6px; font: 400 13px/1.5 var(--f-body); color: var(--text-3); }
+.carta__n { font: 600 11px/1.7 var(--f-mono); color: var(--acento); transition: color 0.6s var(--ease); }
+.carta__notas li:target p { color: var(--text); }
+.carta__volver { color: var(--text-3); margin-left: 4px; }
+
+@media (max-width: 1100px) {
+  .carta__cuerpo { grid-column: 3 / 13; }
+  .carta__notas { grid-column: 3 / 13; }
+  .carta__notas ol { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+}
+@media (max-width: 760px) {
+  .carta__cuerpo, .carta__notas { grid-column: 1 / -1; }
+  .carta__notas ol { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.vite/
+*.log
+.DS_Store
+.vercel
+
+# La foto original (con marco y fondo) no se publica: solo sus derivados en public/.
+assets-src/
+# Modelos de IA que descarga tools/retrato.mjs.
+.cache/
+
+# Tablero de direcciones de la primera sesión (material de trabajo).
+conceptos.html

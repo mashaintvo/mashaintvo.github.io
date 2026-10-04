@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /cv.html
+Disallow: /og.html
+
+Sitemap: https://mashaintvo.github.io/sitemap.xml
