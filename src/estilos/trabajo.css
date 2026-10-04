@@ -5,7 +5,9 @@
    vive el mundo de su producto (azul noche de Lúmina Tech, la interfaz clara
    de Campus); fuera, todo es del portafolio. */
 
-.trabajo { padding: clamp(64px, 10vw, 140px) var(--gutter) 0; }
+/* clip: el recorrido mide 100vw, que con barra de desplazamiento clásica la
+   incluye; lo que sobra se recorta aquí y la página no gana desborde lateral. */
+.trabajo { padding: clamp(64px, 10vw, 140px) var(--gutter) 0; overflow-x: clip; }
 .trabajo__cab, .proyecto { max-width: var(--max); margin-inline: auto; }
 
 .trabajo__cab {
@@ -61,8 +63,12 @@
 .navegador__vista img { display: block; width: 100%; height: auto; }
 .proyecto__portada { will-change: transform; transform-origin: 50% 0; }
 
-/* El recorrido: en escritorio, main.ts lo fija y lo desliza en horizontal. */
-.recorrido { overflow: hidden; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+/* El recorrido: en escritorio, movimiento.ts fija su marco y desliza la pista de lado.
+   Va de borde a borde de la ventana: las pantallas entran y salen por el borde,
+   no contra una pared invisible. El marco (lo que se fija) queda en la columna,
+   así la primera y la última pantalla se alinean con ella. Sin márgenes en el
+   marco: al fijarlo, ScrollTrigger los quita y mediría mal su ancho. */
+.recorrido { width: 100vw; margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%); overflow-x: clip; }
 .recorrido__pista { display: flex; gap: 28px; width: max-content; padding-block: 8px; }
 .recorrido__item { width: min(68vw, 920px); display: grid; gap: 14px; }
 .recorrido__abrir { display: block; width: 100%; border-radius: 22px; text-align: left; }
@@ -73,7 +79,7 @@
 .recorrido__item figcaption b { font: 500 16px/1.3 var(--f-display); letter-spacing: -0.01em; color: var(--text); }
 .recorrido__n { font: 500 11px/1 var(--f-mono); color: var(--acento); transition: color 0.6s var(--ease); }
 /* Sin el deslizamiento (móvil, movimiento reducido o sin JS): una cuadrícula. */
-html:not(.con-horizontal) .recorrido { margin-inline: 0; padding-inline: 0; }
+html:not(.con-horizontal) .recorrido { width: auto; margin-inline: 0; padding-inline: 0; }
 html:not(.con-horizontal) .recorrido__pista { width: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 28px; }
 html:not(.con-horizontal) .recorrido__item { width: auto; }
 

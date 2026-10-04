@@ -36,18 +36,24 @@ function navegador(url: string, img: string, alt: string, opts: { ancho?: number
 
 type Pantalla = { img: string; titulo: string; nota: string; alt: string };
 
-/** El recorrido: las pantallas en fila. Cada una se puede ver en grande. */
+/**
+ * El recorrido: las pantallas en fila. Cada una se puede ver en grande.
+ * En escritorio va de borde a borde de la ventana; lo que se fija al bajar es
+ * el marco, que queda en la columna.
+ */
 function recorrido(url: string, pantallas: Pantalla[], L: T, rotulo: string) {
   return `
-    <div class="recorrido" data-horizontal aria-label="${rotulo}">
-      <div class="recorrido__pista">
-        ${pantallas.map((p, i) => `
-        <figure class="recorrido__item">
-          <button type="button" class="recorrido__abrir" data-ampliar="${p.img}" data-ampliar-alt="${esc(p.alt)}" data-cursor="${L('View', 'Ver')}" aria-label="${L('See larger', 'Ver en grande')}: ${esc(p.titulo)}">
-            ${navegador(url, p.img, p.alt)}
-          </button>
-          <figcaption><span class="recorrido__n">${String(i + 1).padStart(2, '0')}</span><b>${p.titulo}</b> ${p.nota}</figcaption>
-        </figure>`).join('')}
+    <div class="recorrido" aria-label="${rotulo}">
+      <div class="recorrido__marco" data-horizontal>
+        <div class="recorrido__pista">
+          ${pantallas.map((p, i) => `
+          <figure class="recorrido__item">
+            <button type="button" class="recorrido__abrir" data-ampliar="${p.img}" data-ampliar-alt="${esc(p.alt)}" data-cursor="${L('View', 'Ver')}" aria-label="${L('See larger', 'Ver en grande')}: ${esc(p.titulo)}">
+              ${navegador(url, p.img, p.alt)}
+            </button>
+            <figcaption><span class="recorrido__n">${String(i + 1).padStart(2, '0')}</span><b>${p.titulo}</b> ${p.nota}</figcaption>
+          </figure>`).join('')}
+        </div>
       </div>
     </div>`;
 }

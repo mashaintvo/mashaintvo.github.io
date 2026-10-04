@@ -60,7 +60,9 @@ export function iniciarMovimiento(o: { reducido: boolean }) {
     $$('[data-horizontal]').forEach((rec) => {
       const pista = rec.querySelector<HTMLElement>('.recorrido__pista');
       if (!pista) return;
-      const distancia = () => Math.max(0, pista.scrollWidth - rec.clientWidth);
+      // Hasta que la última pantalla llega al borde derecho del marco (la columna).
+      // offsetWidth y no scrollWidth: este sumaría lo que sobresale la pantalla inclinada.
+      const distancia = () => Math.max(0, pista.offsetWidth - rec.clientWidth);
       const desliz = gsap.to(pista, {
         x: () => -distancia(),
         ease: 'none',
