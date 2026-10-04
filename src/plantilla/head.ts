@@ -13,7 +13,9 @@ export function renderHead(lang: Lang) {
     'Portfolio of María Sanjuán, front-end developer and UX/UI designer in Bogotá. Eight years building interfaces for teams in Spain, Germany and Colombia, now with multi-agent AI. Interactive case studies: Lúmina Tech and Lúmina Campus.',
     'Portafolio de María Sanjuán, desarrolladora front-end y diseñadora UX/UI en Bogotá. Ocho años construyendo interfaces para equipos de España, Alemania y Colombia, hoy con IA multiagente. Casos interactivos: Lúmina Tech y Lúmina Campus.',
   );
+  // La tarjeta para redes (1200 × 630): la generan tools/cv.mjs y og.html.
   const og = `${PERFIL.sitio}/og/maria-sanjuan-${lang}.jpg`;
+  const altOg = L('María Sanjuán’s portrait drawn with lines of code, next to her name.', 'El retrato de María Sanjuán dibujado con líneas de código, junto a su nombre.');
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -65,12 +67,18 @@ export function renderHead(lang: Lang) {
   <meta property="og:description" content="${description}" />
   <meta property="og:url" content="${url}" />
   <meta property="og:image" content="${og}" />
+  <meta property="og:image:secure_url" content="${og}" />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="${L('María Sanjuán’s portrait drawn with lines of code, next to her name.', 'El retrato de María Sanjuán dibujado con líneas de código, junto a su nombre.')}" />
+  <meta property="og:image:alt" content="${altOg}" />
   <meta property="profile:first_name" content="María" />
   <meta property="profile:last_name" content="Sanjuán" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${title}" />
+  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:image" content="${og}" />
+  <meta name="twitter:image:alt" content="${altOg}" />
 
   <script>document.documentElement.classList.remove('no-js');try{var m=localStorage.getItem('ms:modo');if(m==='diseno'||m==='codigo')document.documentElement.dataset.modo=m}catch(e){}</script>
   <noscript><style>.cargador{display:none}</style></noscript>

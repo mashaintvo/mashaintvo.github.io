@@ -26,7 +26,8 @@ npm run dev        # http://localhost:5173
 | `npm run cv` | Genera la hoja de vida (ES y EN) en PDF y las tarjetas para redes |
 | `npm run auditoria` | Auditoría de accesibilidad (axe) y desbordes, escritorio y móvil |
 | `npm run retrato` | Recorta la foto y calcula su profundidad (modelos locales) |
-| `npm run monograma` | Genera el monograma en vector (hoy solo lo usa el ícono) |
+| `npm run icono` | Genera el ícono del sitio: «ms» con el degradado pastel |
+| `npm run monograma` | Genera el monograma en vector (archivado: el sitio usa su nombre) |
 
 ## Publicación
 

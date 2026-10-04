@@ -19,7 +19,7 @@
  * empalmes circulares en las esquinas y curvas ajustadas por mínimos
  * cuadrados (Schneider) donde es orgánico.
  *
- *   npm run monograma                   → public/marca/*.svg, favicon.svg e íconos PNG
+ *   npm run monograma                   → public/marca/*.svg (el ícono del sitio lo hace tools/icono.mjs)
  *   node tools/monograma.mjs --revisar  → además, el trazo superpuesto al render
  *                                         (necesita assets-src/marca/monograma-b.jpg)
  */
@@ -629,8 +629,7 @@ if (esPrincipal) {
     'marca/monograma-volumen.svg': svgMonograma({ volumen: true }),
     // un color, con el hueco donde la S pasa por encima
     'marca/monograma-lila.svg': svgMonograma({ color: COLORES.lila }),
-    // a 16–32 px no se nota que el degradado vaya en tramos largos: archivo más liviano
-    'favicon.svg': svgIcono(64, { paso: 140 }),
+    // (el ícono del sitio ya no es el monograma: lo hace tools/icono.mjs con «ms»)
   };
   for (const [nombre, svg] of Object.entries(salidas)) {
     await writeFile(resolve(root, 'public', nombre), svg);
@@ -659,10 +658,7 @@ export const TRAZO = {
   await writeFile(resolve(root, 'src/datos/monograma-trazo.ts'), trazo);
   console.log(`src/datos/monograma-trazo.ts   ${(trazo.length / 1024).toFixed(1)} KB`);
 
-  for (const [lado, nombre] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png'], [512, 'icono-512.png']]) {
-    await sharp(Buffer.from(svgIcono(512))).resize(lado, lado).png({ compressionLevel: 9 }).toFile(resolve(root, 'public', nombre));
-  }
-  console.log(`íconos: favicon-32.png · apple-touch-icon.png · icono-512.png · proporción ${PROPORCION.toFixed(4)}`);
+  console.log(`proporción ${PROPORCION.toFixed(4)}`);
 
   if (REVISAR) {
     const dbg = resolve(root, 'assets-src/debug');
